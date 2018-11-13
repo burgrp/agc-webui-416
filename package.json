@@ -1,6 +1,6 @@
 {
   "name": "agc-webui-416",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "",
   "main": "src/start.js",
   "scripts": {
