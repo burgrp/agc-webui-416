@@ -1,5 +1,6 @@
 {
     "modules": [{
-        "module": "./display.js"
+        "module": "./display.js",
+        "mqttBroker": "-> $MQTT"
     }]
 }
