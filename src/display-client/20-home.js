@@ -19,10 +19,14 @@ wg.pages.home = {
             });
 
             button.click(e => {
-                if (state !== undefined) {
+                
+                if (state === undefined) {
+                    state = true;
+                } else {
                     state = !state;
-                    wg.display.setRegister(name, state);
                 }
+                    
+                wg.display.setRegister(name, state);
             });
     
             updateByReg(display.registers[name]);
