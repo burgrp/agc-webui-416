@@ -37,7 +37,7 @@ wg.pages.home = {
         (await display.header(container, "home")).append([
             DIV("panel", [
                 DIV("group", [
-                    DIV("title").text("ON / OFF"),
+                    DIV("title").text("xON / OFF"),
                     SPAN("content", [
                         TABLE([
                             TR([
