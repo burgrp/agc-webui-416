@@ -21,7 +21,7 @@ wg.pages.home = {
             button.click(e => {
                 
                 if (state === undefined) {
-                    state = true;
+                    state = false;
                 } else {
                     state = !state;
                 }
