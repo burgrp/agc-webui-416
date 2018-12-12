@@ -191,6 +191,24 @@ button.yellow {
     min-width: 20em;
 }
 
+.panel.regs {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.panel.regs .content {
+    flex-grow: 1;
+}
+
+.panel.regs .reg-list {
+    flex-grow: 1;
+}
+
+.panel.regs .group {
+    flex-grow: 1;
+    align-items: stretch;
+}
+
 /*
 border: 1px dashed red;
 */
