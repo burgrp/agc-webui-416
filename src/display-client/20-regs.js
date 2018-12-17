@@ -1,73 +1,47 @@
-display.regMode = "list";
-
 wg.pages.regs = {
     async render(container) {
 
-        let regListDiv = DIV("matrix-lcd reg-list");
-        let regUpdates = {};
-        let deviceDivs = {};
+        let nameToClass = name => name.replace(/[ .]/g, "-");
 
-        function clear() {
-            regListDiv.empty();
-            regUpdates = {};
-            deviceDivs = {};
-        }
+        let groups = DIV("panel raw-regs");
+        (await display.header(container, "regs")).append(groups);
 
-        function refresh(mode) {
-            display.regMode = mode;
-            $(".push.mode").toggleClass("yellow", false);
-            $(".push.mode." + mode).toggleClass("yellow", true);
-            clear();
-            Object.entries(display.registers).forEach(([name, reg]) => updateReg(name, reg));
-        }
+        function updateRegister(name, reg) {
+                let device = (reg.meta && reg.meta.device) || "Others";
 
-        (await display.header(container, "regs")).append(
-            SPAN("panel", [
-                regListDiv,
-                DIV("group", [
-                    DIV("title").text("Display"),
-                    DIV("content", [
-                        DIV([
-                            BUTTON("push").text("Clear").click(clear),
-                            BUTTON("push mode list").text("List").click(() => refresh("list")),
-                            BUTTON("push mode device").text("Device").click(() => refresh("device")),
-                        ])
-                    ])
-                ])
-            ])
-        );
-
-        function updateReg(name, reg) {
-            if (!regUpdates[name]) {
+                let regsDiv = $(".content.device." + nameToClass(device));
                 
-                let elValue = DIV("reg-val");
-                regUpdates[name] = reg => {
-                    elValue.text((reg.value === undefined? "?": reg.value).toString().padStart(8, "."));
-                };                
-                
-                let elReg = SPAN("reg", [
-                    SPAN("reg-name").text(name.padEnd(40, ".")),
-                    elValue
-                ]);
+                if (!regsDiv.length) {
+                        let title = [...device].map(ch => (ch === ch.toUpperCase() && ch !== ch.toLowerCase()? " ": "") + ch.toLowerCase()).join("");
+                        groups.append(DIV("group", [
+                                DIV("title").text(title),
+                                DIV("content device " + nameToClass(device), div => regsDiv = div)
 
-                if (display.regMode === "device") {
-                    let device = (reg.meta && reg.meta.device) || "Others";
-                    if (!deviceDivs[device]) {
-                        deviceDivs[device] = DIV([
-                            SPAN().text(device + ":")
-                        ]).appendTo(regListDiv);
-                    }
-                    deviceDivs[device].append(elReg);
-                } else {
-                    regListDiv.append(elReg);    
+                        ]));
                 }
-                
-            }
-            regUpdates[name](reg);
+
+                    
+                let valueDiv = regsDiv.find(".value." + nameToClass(name));
+                if (!valueDiv.length) {
+                        regsDiv.append(DIV("reg", [
+                                DIV("name").text(name),
+                                DIV("value " + nameToClass(name), div => valueDiv = div)
+                        ]));                        
+                }
+
+                valueDiv.text(
+                        reg.value === true || reg.value === false || reg.value === undefined? "": 
+                        typeof reg.value === "number"? reg.value.toFixed(/^zone\..*\.valve\./.test(name)?0: 1):
+                        reg.value
+                );
+                valueDiv.toggleClass("on", reg.value === true);
+                valueDiv.toggleClass("off", reg.value === false);
+                valueDiv.toggleClass("undefined", reg.value === undefined);
+                valueDiv.toggleClass("seg7", typeof reg.value === "number");
+
         }
 
-        refresh(display.regMode);
-        regListDiv.onRegisterChanged(updateReg);
-
+        groups.onRegisterChanged(updateRegister);
+        Object.entries((await wg.display.getRegisters())).forEach(([name, reg]) => updateRegister(name, reg));
     }    
 }

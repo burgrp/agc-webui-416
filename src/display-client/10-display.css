@@ -102,14 +102,15 @@ button:focus {
 }
 
 .group>.title {
-    font-family: semi-bold;    
-    text-transform: uppercase;    
+    font-family: semi-bold;
+    text-transform: uppercase;
     position: relative;
     top: -1.65em;
     margin-bottom: -1.3em;
     background-color: var(--color-panel-background);
     padding: 0 0.6em 0 0.4em;
     text-shadow: 0 0 1em black;
+    align-self: flex-start;
 }
 
 .group>.content {
@@ -191,23 +192,58 @@ button.yellow {
     min-width: 20em;
 }
 
-.panel.regs {
-    flex-direction: row;
+
+.panel.raw-regs {
     flex-wrap: wrap;
+    flex-direction: row;    
+    align-items: flex-start;
+    justify-content: space-evenly;
 }
 
-.panel.regs .content {
-    flex-grow: 1;
+.panel.raw-regs .reg {
+    border-bottom: 1px dotted #4f4f4f;
+    flex-direction: row;
+    justify-content: space-between;    
+    align-items: center;
 }
 
-.panel.regs .reg-list {
-    flex-grow: 1;
+.panel.raw-regs .name {
+    min-width: 12em;
 }
 
-.panel.regs .group {
-    flex-grow: 1;
-    align-items: stretch;
+.panel.raw-regs .value {
+    margin-left: 1em;
 }
+
+.panel.raw-regs .value.seg7 {
+    font-size: 1.2em;
+    min-width: 3em;
+    text-align: right;
+}
+
+.panel.raw-regs .value.on, .panel.raw-regs .value.off, .panel.raw-regs .value.undefined {
+    width: 2em;
+    height: 0.8em;
+    border-radius: 0.2em;    
+    overflow: hidden;
+    border: inset 1px darkgray;
+    box-shadow: inset 0 0 0.4em 0.1em #000000a1;
+}
+
+.panel.raw-regs .value.on, .panel.raw-regs .value.undefined {
+    box-shadow: 0 0 0.5em 0.05em, inset 0 0 0.4em 0.1em #808080a1;
+}
+
+.panel.raw-regs .value.on {
+    background-color: #5ef176;    
+    color: #5ef176;    
+}
+
+.panel.raw-regs .value.undefined {
+    background-color: #ff4646;    
+    color: #ff4646;    
+}
+
 
 /*
 border: 1px dashed red;
