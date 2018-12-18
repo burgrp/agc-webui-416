@@ -196,19 +196,20 @@ button.yellow {
 .panel.raw-regs {
     flex-wrap: wrap;
     flex-direction: row;    
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: space-evenly;
 }
-
+ 
 .panel.raw-regs .reg {
     border-bottom: 1px dotted #4f4f4f;
     flex-direction: row;
     justify-content: space-between;    
     align-items: center;
+    min-width: 18em;
 }
 
 .panel.raw-regs .name {
-    min-width: 12em;
+    xmin-width: 12em;
 }
 
 .panel.raw-regs .value {
