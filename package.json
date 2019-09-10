@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@device.farm/appglue": "^1.0.13",
-    "@device.farm/mqtt-reg": "^1.0.17",
+    "@device.farm/mqtt-reg": "^1.0.18",
     "@device.farm/webglue": "^1.0.3"
   }
 }
